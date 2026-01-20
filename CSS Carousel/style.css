@@ -1,0 +1,110 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Noto+Serif:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+box-sizing: border-box;
+}
+
+.page {
+    padding: 0 16px;
+}
+
+body {
+    background: #00020e;
+    font-family: "Poppins";
+}
+
+.container {
+    display: flex;
+    overflow-x: auto; /*on the X-axis overflow is auto with a browser scrollbar*/
+    gap: 1em;
+    margin: 3em auto;
+    width: 100%;
+    scroll-behavior: smooth; /*ensures smooth scrolling*/
+    anchor-name: --cont; /*for positioning of scroll buttons*/
+    scroll-snap-type: x mandatory;  /*this ensures that scrolling is perfect and does not stop in the middle of a card*/
+
+    scroll-marker-group: after;  /*'after' is for markers under the slide and 'before' is for markers above slide*/
+}
+
+/* position for marker group */
+.container::scroll-marker-group {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+}
+
+/* style for marker group */
+.card::scroll-marker {
+    content: "";
+    background-color: rgb(43, 44, 67);
+    border-radius: 50%;
+    width: 10px;
+    height: 10px;
+}
+
+/* style for scroll marker when selected */
+.card::scroll-marker:target-current {
+    background-color: rgba(255, 255, 255, 0.773);
+}
+
+.container::-webkit-scrollbar {
+    display: none;   /*don't show browser scrollbar*/
+}
+
+.container::scroll-button(right), .container::scroll-button(left) {
+    cursor: pointer;
+    padding-bottom: 5px;
+    font-family: "Poppins";
+    font-size: 3rem;
+    border: none;
+    content: '>';
+    width: 30px;
+    height: 120px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(85, 85, 86, 0.405);
+    color: white;
+    position: fixed;
+    position-anchor: --cont;  /*call scroll buttons anchor name for positioning*/
+    position-area: right center;  /*location or position*/
+    translate: -50%;
+}
+
+.container::scroll-button(left) {
+    content: "<";
+    position-area: left center;
+    translate: 50%;
+}
+
+.container::scroll-button(right):disabled, .container::scroll-button(left):disabled {
+    opacity: 0.5;
+    cursor: auto;
+}
+
+.card {
+    scroll-snap-align: start;  /*scroll at the start of the cards*/
+    background-color: rgb(32, 33, 51);
+    flex: 0 0 20em;
+    align-content: center;
+    text-align: center;
+    color: white;
+    font-size: 25px;
+    aspect-ratio: 5 / 3;  /*for image or other elems*/
+    border-radius: 20px;
+    padding: 1em;
+}
+
+/* media query for mobile screens */
+@media (max-width: 600px) {
+    .card {
+        flex: 0 0 100%;
+    }
+}
+
+/* flex: 0 0 100%; */
+/* in this:
+flex-grow: 0;    --> first 0
+flex-shrink: 0;  --> sec 0
+flex-basis: 100%; --> third value */
